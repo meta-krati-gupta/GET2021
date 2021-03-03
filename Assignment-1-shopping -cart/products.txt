@@ -1,0 +1,15 @@
+101, Asthprash (300 grams), 1999
+102, Detox Tea (25 Pcs), 625
+103, Immunity Tea (25 Pcs), 625
+104, Tulsi Drop (30ml), 190
+105, Adila Forte (30 Tab), 1200
+106, Adila Forte (60 Tab), 2200
+107, Seabuckthron (1 Ltr), 1999
+108, Rich Berry (1 Ltr.), 2499
+109, HB+ (200ml), 720
+110, Liv-Ease (200ml), 749
+111, Gas-O-Free (200ml), 599
+112, HB+ (500ml), 1199
+113, Liv-Ease (500ml), 1199
+114, Gas-O-Free (500ml), 1199
+115, Adicardial Syrup (500ml), 1199
