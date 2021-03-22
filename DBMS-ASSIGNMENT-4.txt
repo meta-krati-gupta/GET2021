@@ -1,0 +1,65 @@
+-------------------------a1------------------------
+
+  
+DROP FUNCTION IF EXISTS countOrders;
+DELIMITER //
+CREATE FUNCTION countOrders(inMonthYear DATE) RETURNS int DETERMINISTIC
+BEGIN
+    RETURN (SELECT count(order_id) FROM orders where MONTH(order_date_time)=MONTH(inMonthYear) and
+        YEAR(order_date_time)=YEAR(inMonthYear));
+END //
+
+DELIMITER ;
+SELECT countOrders(CURDATE());
+
+DROP FUNCTION IF EXISTS maxOrderMonth;
+
+DELIMITER //
+CREATE FUNCTION maxOrderMonth(inMonthYear DATE) RETURNS int DETERMINISTIC
+BEGIN
+    
+    RETURN (SELECT order_month FROM (SELECT count(order_id) AS order_count,
+    MONTH(order_date_time) AS order_month FROM orders where YEAR(order_date_time)=YEAR(inMonthYear) 
+    GROUP BY month(order_date_time) ORDER BY order_date_time DESC) AS X  LIMIT 1);
+END //
+
+DELIMITER ;
+
+SELECT maxOrderMonth(CURDATE());
+
+--------------------------------a2--------------------------------
+
+DROP PROCEDURE IF EXISTS  avgSalesForMonth;
+
+DELIMITER /
+
+CREATE PROCEDURE avgSalesForMonth(inMonth int, inyear int)
+BEGIN
+    
+    select p.product_id, p.product_name, o.order_date_time, sum(o.order_amount), avg(o.order_amount) from orders o join products p on
+    o.product_id = p.product_id where month(o.order_date_time)=inMonth and year(o.order_date_time) = inYear
+    group by p.product_id;
+    
+END/
+
+DELIMITER ;
+
+call avgSalesForMonth(03, 2021);
+
+
+DROP PROCEDURE IF EXISTS  ordersInRange;
+
+DELIMITER /
+
+CREATE PROCEDURE ordersInRange(startDate DATE, endDate DATE)
+BEGIN
+    
+    select order_id, order_status, order_date_time from orders where order_date_time
+    BETWEEN startDate AND endDate group by order_id;
+    
+END/
+
+DELIMITER ;
+
+call ordersInRange('2021-01-16', CURDATE());
+
