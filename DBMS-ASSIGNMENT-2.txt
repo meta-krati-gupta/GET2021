@@ -1,0 +1,128 @@
+-----------------------------display------------------------
+SELECT p.product_id, p.product_name,category.category_name, p.product_price from products p join category where status = 'active' order by product_date DESC;
+
+SELECT p.product_name from products p join image where image.img IS NULL;
+
+SELECT sc.subcategory_id, sc.subcategory_name,category.category_name from subcategory sc join category order by category_name, sc.subcategory_name;
+
+SELECT sc.subcategory_id, sc.subcategory_name from subcategory sc;
+
+SELECT p.product_name, p.product_price, p.product_description from products p join subcategory sc 
+where sc.subcategory_name = 'mobile';
+
+SELECT product_name, stock from products where stock < 50;
+
+SELECT order_id, order_date_time, order_amount from orders order by order_date_time desc LIMIT 50;
+
+SELECT order_id, order_date_time, order_amount from orders order by order_amount desc LIMIT 10;
+
+SELECT order_id, order_date_time, order_amount from orders where order_status = 'not Shipped' and 
+CURDATE()-order_date_time>=10;
+
+SELECT c.customer_id, c.customer_name from customer c join orders o ON c.customer_id=o.customer_id 
+where c.customer_id NOT IN (SELECT c.customer_id from customer c join orders o where
+c.customer_id=o.customer_id and CURDATE()-o.order_date_time<=31);
+
+SELECT c.customer_id, c.customer_name from customer c join orders o ON c.customer_id=o.customer_id 
+where CURDATE()-o.order_date_time<15;
+
+SELECT order_id, order_date_time, order_status from orders where order_status = 'Shipped';
+
+SELECT order_id, order_date_time, order_amount from orders where order_amount >=20 and order_amount<=50;
+
+
+----------------------------insertdata-------------------------
+INSERT INTO Admin (admin_username,admin_pw) VALUES ('Krati',MD5('pass'));
+
+INSERT INTO customer (customer_name, customer_mobile, customer_email, customer_pswd) VALUES ('Abhi','9999244567','abh@gmail.com', MD5(MD5('pass')));
+INSERT INTO customer (customer_name, customer_mobile, customer_email, customer_pswd) VALUES ('Avi','9999244567','avi@gmail.com',MD5('pass'));
+INSERT INTO customer (customer_name, customer_mobile, customer_email, customer_pswd) VALUES ('Adi','9999244567','adi@gmail.com',MD5('pass'));
+INSERT INTO customer (customer_name, customer_mobile, customer_email, customer_pswd) VALUES ('Arun','9999244567','arun@gmail.com',MD5('pass'));
+INSERT INTO customer (customer_name, customer_mobile, customer_email, customer_pswd) VALUES ('Veena','9999244567','veena@gmail.com',MD5('pass'));
+INSERT INTO customer (customer_name, customer_mobile, customer_email, customer_pswd) VALUES ('Vamika','9999244567','vam@gmail.com',MD5('pass'));
+
+INSERT INTO category (category_name,product_id) VALUES ('Grocery',1);
+INSERT INTO category (category_name,product_id) VALUES ('Life Style',2);
+INSERT INTO category (category_name,product_id) VALUES ('Electronics',3);
+INSERT INTO category (category_name,product_id) VALUES ('Furniture',4);
+INSERT INTO category (category_name,product_id) VALUES ('Automotive',5);
+
+INSERT INTO subcategory (subcategory_name,product_id) VALUES ('Wheat',1);
+INSERT INTO subcategory (subcategory_name,product_id) VALUES ('Jeans',2);
+INSERT INTO subcategory (subcategory_name,product_id) VALUES ('Mobile',3);
+INSERT INTO subcategory (subcategory_name,product_id) VALUES ('Chair',4);
+INSERT INTO subcategory (subcategory_name,product_id) VALUES ('laptop',5);
+
+INSERT INTO image (product_id) VALUES (1);
+INSERT INTO image (product_id) VALUES (2);
+INSERT INTO image (product_id) VALUES (3);
+INSERT INTO image (product_id) VALUES (4);
+INSERT INTO image (product_id) VALUES (5);
+
+INSERT INTO products (product_name, product_description, status, product_date, category_id, product_price,stock, img_id) VALUES ('Abc','Description','active',NOW(),1, 200,10,1);
+INSERT INTO products (product_name, product_description, status, product_date, category_id, product_price,stock, img_id) VALUES ('snjb','Description','inactive',NOW(),2,245,17,2);
+INSERT INTO products (product_name, product_description, status, product_date, category_id, product_price,stock, img_id) VALUES ('jsja','Description','active',NOW(),2,341,20,5);
+INSERT INTO products (product_name, product_description, status, product_date, category_id, product_price,stock, img_id) VALUES ('yhak','Description','active',NOW(),4,444,40,3);
+INSERT INTO products (product_name, product_description, status, product_date, category_id, product_price,stock, img_id) VALUES ('jnal','Description','active',NOW(),4,500,50,4);
+INSERT INTO products (product_name, product_description, status, product_date, category_id, product_price,stock, img_id) VALUES ('oMLW','Description','active',NOW(),3,199,100,4);
+
+INSERT INTO payment(order_id, payment_method,payment_amount, payment_date) VALUES (1,'UPI',249,NOW());
+INSERT INTO payment(order_id, payment_method,payment_amount, payment_date) VALUES (2,'UPI',249,NOW());
+INSERT INTO payment(order_id, payment_method,payment_amount, payment_date) VALUES (3,'card',249,NOW());
+INSERT INTO payment(order_id, payment_method,payment_amount, payment_date) VALUES (4,'UPI',249,'2021-02-5');
+INSERT INTO payment(order_id, payment_method,payment_amount, payment_date) VALUES (5,'card',249,'2021-03-14');
+
+
+INSERT INTO orders (customer_id,order_date_time,order_amount,order_status,product_id,payment_id) VALUES (1,NOW(),200,'shipped',1,1);
+INSERT INTO orders (customer_id,order_date_time,order_amount,order_status,product_id,payment_id) VALUES (2,'2021-02-5',499,'Delivered',2,2);
+INSERT INTO orders (customer_id,order_date_time,order_amount,order_status,product_id,payment_id) VALUES (3,NOW(),249,'shipped',3,4);
+INSERT INTO orders (customer_id,order_date_time,order_amount,order_status,product_id,payment_id) VALUES (3,'2021-03-14',355,'Delivered',4,5);
+INSERT INTO orders (customer_id,order_date_time,order_amount,order_status,product_id,payment_id) VALUES (1,NOW(),750,'shipped',4,6);
+INSERT INTO orders (customer_id,order_date_time,order_amount,order_status,product_id,payment_id) VALUES (1,'2021-03-1',750,'Not shipped',4,6);
+
+
+INSERT INTO address (customer_id,house_no,city,state,country,pincode) VALUES (1,1,'jaipur','rajasthan','India',302022);
+INSERT INTO address (customer_id,house_no,city,state,country,pincode) VALUES (2,5,'mumbai','maharashtra','India',200201);
+INSERT INTO address (customer_id,house_no,city,state,country,pincode) VALUES (3,3,'patna','bihar','India',800020);
+INSERT INTO address (customer_id,house_no,city,state,country,pincode) VALUES (3,20,'delhi','delhi','India',100023);
+INSERT INTO address (customer_id,house_no,city,state,country,pincode) VALUES (1,56,'kanpur','up','India',400021);
+INSERT INTO address (customer_id,house_no,city,state,country,pincode) VALUES (1,202,'agra','up','India',400402);
+
+
+--------------------------storefront-----------------------------
+DROP database store;
+CREATE database store;
+use store;
+create table address(address_id int NOT NULL AUTO_INCREMENT primary key, customer_id int, house_no int,
+city varchar(100), state varchar(100), country varchar(100), pincode int );
+
+create table image(img_id int NOT NULL AUTO_INCREMENT primary key, img BLOB, product_id int);
+
+create table products(product_id int NOT NULL AUTO_INCREMENT primary key, product_name varchar(100),
+product_description varchar(100), status char(20) DEFAULT 'active',product_date datetime, category_id int, product_price decimal(10,2),stock int, img_id int, 
+foreign key(img_id) references image(img_id));
+
+create table subcategory(subcategory_id int NOT NULL AUTO_INCREMENT primary key, subcategory_name varchar(100),
+product_id int);
+
+create table category(category_id int NOT NULL AUTO_INCREMENT primary key, category_name varchar(100),
+product_id int);
+
+create table payment(order_id int, payment_id int  NOT NULL AUTO_INCREMENT primary key, payment_method
+varchar(100), payment_amount decimal(10,2), payment_date datetime);
+
+create table Orders(order_id int NOT NULL AUTO_INCREMENT primary key, customer_id int, order_date_time 
+datetime, order_amount decimal(19,2), order_status varchar(225), product_id int, payment_id int,foreign
+key(payment_id) references Payment(payment_id));
+
+create table Customer(customer_id int NOT NULL AUTO_INCREMENT primary key, customer_name varchar(100),
+customer_mobile varchar(15), customer_email varchar(225), customer_pswd char(60));
+
+create table Admin(admin_username varchar(100), admin_pw char(60) );
+
+drop table products;
+
+
+create table products(product_id int NOT NULL AUTO_INCREMENT primary key, product_name varchar(100),
+product_description varchar(100), status char(20) DEFAULT 'active',product_date datetime, category_id int, product_price decimal(10,2),stock int, img_id int, 
+foreign key(img_id) references image(img_id));
